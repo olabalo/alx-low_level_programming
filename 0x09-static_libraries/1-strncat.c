@@ -17,4 +17,9 @@ char *_strncat(char *dest, char *src, int n)
 	return (strncat(dest, src, n));
 
 }
+int main(void)
+{
+/* Code goes here */
+return (0);
+}
 

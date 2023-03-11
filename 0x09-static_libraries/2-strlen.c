@@ -11,10 +11,9 @@
 int _strlen(char *s)
 {
 	return (strlen(s));
-
 }
-
-
-
-
-
+int main(void)
+{
+/* Code goes here */
+return (0);
+}

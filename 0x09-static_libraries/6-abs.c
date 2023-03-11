@@ -13,3 +13,8 @@ int _abs(int n)
 {
 return (abs(n));
 }
+int main(void)
+{
+/* Code goes here */
+return (0);
+}

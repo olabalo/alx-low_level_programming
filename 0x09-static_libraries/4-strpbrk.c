@@ -13,4 +13,8 @@ char *_strpbrk(char *s, char *accept)
 {
 	return (strpbrk(s, accept));
 }
-
+int main(void)
+{
+/* Code goes here */
+return (0);
+}

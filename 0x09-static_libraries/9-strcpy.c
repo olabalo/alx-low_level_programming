@@ -14,8 +14,8 @@ char *_strcpy(char *dest, char *src)
 {
 return (strcpy(dest, src));
 }
-
-
-
-
-
+int main(void)
+{
+/* Code goes here */
+return (0);
+}

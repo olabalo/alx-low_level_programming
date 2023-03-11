@@ -14,3 +14,8 @@ char *_strstr(char *haystack, char *needle)
 {
 return (strstr(haystack, needle));
 }
+int main(void)
+{
+/* Code goes here */
+return (0);
+}

@@ -12,3 +12,8 @@ int _isdigit(int c)
 {
 	return (isdigit(c));
 }
+int main(void)
+{
+/* Code goes here */
+return (0);
+}

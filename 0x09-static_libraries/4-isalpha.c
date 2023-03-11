@@ -13,8 +13,8 @@ int _isalpha(int c)
 {
 return (isalpha(c));
 }
-
-
-
-
-
+int main(void)
+{
+/* Code goes here */
+return (0);
+}
