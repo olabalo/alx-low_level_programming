@@ -1,15 +1,15 @@
 #include <stdlib.h>
 #include "main.h"
-
 /**
  * argstostr - concatenates all the arguments of the program
  * @ac: number of arguments
  * @av: array of arguments
+ *
  * Return: Pointer to the new string (Success), NULL (Error)
  */
 char *argstostr(int ac, char **av)
 {
-int i, j, k, len;
+int i, j, k, len = 0;
 char *str;
 
 if (ac == 0 || av == NULL)
@@ -42,3 +42,4 @@ k++;
 
 return (str);
 }
+
