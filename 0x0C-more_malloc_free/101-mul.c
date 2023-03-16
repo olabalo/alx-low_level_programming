@@ -1,128 +1,85 @@
-#include "main.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 /**
- * _is_zero - determines if any number is zero
- * @argv: argument vector.
+ * _is_positive - checks if a number is positive
+ * @num: the number to check
  *
- * Return: no return.
+ * Return: 1 if positive, 0 otherwise
  */
-void _is_zero(char *argv[])
+int _is_positive(char *num)
 {
-	int i, isn1 = 1, isn2 = 1;
-
-	for (i = 0; argv[1][i]; i++)
-		if (argv[1][i] != '0')
-		{
-			isn1 = 0;
-			break;
-		}
-
-	for (i = 0; argv[2][i]; i++)
-		if (argv[2][i] != '0')
-		{
-			isn2 = 0;
-			break;
-		}
-
-	if (isn1 == 1 || isn2 == 1)
-	{
-		printf("0\n");
-		exit(0);
-	}
+        if (*num == '-')
+                return (0);
+        while (*num)
+        {
+                if (!isdigit(*num))
+                        return (0);
+                num++;
+        }
+        return (1);
 }
 
 /**
- * _initialize_array - set memery to zero in a new array
- * @ar: char array.
- * @lar: length of the char array.
+ * main - multiplies two positive numbers
+ * @argc: the argument count
+ * @argv: the argument vector
  *
- * Return: pointer of a char array.
+ * Return: 0 on success, 98 on failure
  */
-char *_initialize_array(char *ar, int lar)
+int main(int argc, char **argv)
 {
-	int i = 0;
+        int i, j, len1, len2, len_out, carry, sum;
+        char *num1, *num2, *out;
 
-	for (i = 0; i < lar; i++)
-		ar[i] = '0';
-	ar[lar] = '\0';
-	return (ar);
-}
+        if (argc != 3 || !_is_positive(argv[1]) || !_is_positive(argv[2]))
+        {
+                printf("Error\n");
+                return (98);
+        }
 
-/**
- * _checknum - determines length of the number
- * and checks if number is in base 10.
- * @argv: arguments vector.
- * @n: row of the array.
- *
- * Return: length of the number.
- */
-int _checknum(char *argv[], int n)
-{
-	int ln;
+        num1 = argv[1];
+        num2 = argv[2];
 
-	for (ln = 0; argv[n][ln]; ln++)
-		if (!isdigit(argv[n][ln]))
-		{
-			printf("Error\n");
-			exit(98);
-		}
+        len1 = 0;
+        while (num1[len1])
+                len1++;
+        len2 = 0;
+        while (num2[len2])
+                len2++;
 
-	return (ln);
-}
+        len_out = len1 + len2 + 1;
+        out = malloc(sizeof(char) * len_out);
+        if (!out)
+        {
+                printf("Error\n");
+                return (98);
+        }
 
-/**
- * main - Entry point.
- * program that multiplies two positive numbers.
- * @argc: number of arguments.
- * @argv: arguments vector.
- *
- * Return: 0 - success.
- */
-int main(int argc, char *argv[])
-{
-	int ln1, ln2, lnout, add, addl, i, j, k, ca;
-	char *nout;
+        for (i = 0; i < len_out; i++)
+                out[i] = '0';
+        out[len_out - 1] = '\0';
 
-	if (argc != 3)
-		printf("Error\n"), exit(98);
-	ln1 = _checknum(argv, 1), ln2 = _checknum(argv, 2);
-	_is_zero(argv), lnout = ln1 + ln2, nout = malloc(lnout + 1);
-	if (nout == NULL)
-		printf("Error\n"), exit(98);
-	nout = _initialize_array(nout, lnout);
-	k = lnout - 1, i = ln1 - 1, j = ln2 - 1, ca = addl = 0;
-	for (; k >= 0; k--, i--)
-	{
-		if (i < 0)
-		{
-			if (addl > 0)
-			{
-				add = (nout[k] - '0') + addl;
-				if (add > 9)
-					nout[k - 1] = (add / 10) + '0';
-				nout[k] = (add % 10) + '0';
-			}
-			i = ln1 - 1, j--, addl = 0, ca++, k = lnout - (1 + ca);
-		}
-		if (j < 0)
-		{
-			if (nout[0] != '0')
-				break;
-			lnout--;
-			free(nout), nout = malloc(lnout + 1), nout = _initialize_array(nout, lnout);
-			k = lnout - 1, i = ln1 - 1, j = ln2 - 1, ca = addl = 0;
-		}
-		if (j >= 0)
-		{
-			add = ((argv[1][i] - '0') * (argv[2][j] - '0')) + (nout[k] - '0') + addl;
-			addl = add / 10, nout[k] = (add % 10) + '0';
-		}
-	}
-	printf("%s\n", nout);
-	return (0);
-}
+        for (i = len1 - 1; i >= 0; i--)
+        {
+                carry = 0;
+                for (j = len2 - 1; j >= 0; j--)
+                {
+                        sum = (num1[i] - '0') * (num2[j] - '0') + out[i + j + 1] - '0' + carry;
+                        out[i + j + 1] = sum % 10 + '0';
+                        carry = sum / 10;
+                }
+                if (carry)
+                        out[i + j + 1] = carry + '0';
+        }
 
+        while (*out == '0' && *(out + 1))
+                out++;
 
+        printf("%s\n", out);
+
+        free(out);
+
+        return (0);
+} 
